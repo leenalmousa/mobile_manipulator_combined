@@ -1,0 +1,367 @@
+<?xml version="1.0"?>
+<robot name="mobile_manipulator">
+
+  <!-- Materials -->
+  <material name="white"><color rgba="1 1 1 1"/></material>
+  <material name="blue"><color rgba="0 0 0.8 1"/></material>
+  <material name="grey"><color rgba="0.5 0.5 0.5 1"/></material>
+  <material name="black"><color rgba="0.05 0.05 0.05 1"/></material>
+
+  <!-- Base footprint -->
+  <link name="base_footprint"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  <!-- Base body  -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0.04875"/>
+      <mass value="1.3103"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.04875"/>
+      <geometry><box size="0.19 0.14 0.0575"/></geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.06"/>
+      <geometry><box size="0.18 0.13 0.03"/></geometry>
+    </collision>
+  </link>
+
+  <!-- Wheels -->
+  <link name="front_left_wheel">
+    <visual>
+      <origin rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.03" length="0.025"/></geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.03" length="0.025"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.044"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+  <joint name="front_left_wheel_joint" type="continuous">
+    <axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="front_left_wheel"/>
+    <origin xyz="0.055 0.0825 0.03"/>
+  </joint>
+
+  <link name="front_right_wheel">
+    <visual>
+      <origin rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.03" length="0.025"/></geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.03" length="0.025"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.044"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+  <joint name="front_right_wheel_joint" type="continuous">
+    <axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="front_right_wheel"/>
+    <origin xyz="0.055 -0.0825 0.03"/>
+  </joint>
+
+  <link name="rear_left_wheel">
+    <visual>
+      <origin rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.03" length="0.025"/></geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.03" length="0.025"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.044"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="rear_left_wheel"/>
+    <origin xyz="-0.055 0.0825 0.03"/>
+  </joint>
+
+  <link name="rear_right_wheel">
+    <visual>
+      <origin rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.03" length="0.025"/></geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.03" length="0.025"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.044"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="rear_right_wheel"/>
+    <origin xyz="-0.055 -0.0825 0.03"/>
+  </joint>
+
+  <!-- Arm base pedestal  -->
+  <link name="arm_base_pedestal">
+    <visual>
+      <origin xyz="0 0 0.0225"/>
+      <geometry><box size="0.025 0.055 0.045"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0225"/>
+      <geometry><box size="0.025 0.055 0.045"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.0225"/>
+      <mass value="0.083"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+  <joint name="pedestal_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="arm_base_pedestal"/>
+    <origin xyz="0.0625 0 0.0775"/>
+  </joint>
+
+  <!-- Joint 1 -->
+  <joint name="joint1" type="revolute">
+    <parent link="arm_base_pedestal"/>
+    <child link="link_waist"/>
+    <origin xyz="0 0 0.045"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="1.0"/>
+    <dynamics damping="0.1" friction="0.1"/>
+  </joint>
+
+  <link name="link_waist">
+    <visual>
+      <origin xyz="0 0 0.01"/>
+      <geometry><cylinder radius="0.010" length="0.02"/></geometry>
+      <material name="black"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.0425"/>
+      <geometry><box size="0.025 0.055 0.065"/></geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0325"/>
+      <geometry><box size="0.025 0.055 0.065"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.0325"/>
+      <mass value="0.025"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- Joint 2 -->
+  <joint name="joint2" type="revolute">
+    <parent link="link_waist"/>
+    <child link="link_tilt_mount"/>
+    <origin xyz="0 0 0.075"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0"/>
+    <dynamics damping="0.1" friction="0.1"/>
+  </joint>
+
+  <link name="link_tilt_mount">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.01" length="0.03"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry><cylinder radius="0.01" length="0.03"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- Pillar  -->
+  <joint name="joint_pillar" type="fixed">
+    <parent link="link_tilt_mount"/>
+    <child link="arm_pillar_link"/>
+    <origin xyz="0 0 0.01"/>
+  </joint>
+
+  <link name="arm_pillar_link">
+    <visual>
+      <origin xyz="0 0 0.0525"/>
+      <geometry><box size="0.025 0.043 0.105"/></geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0525"/>
+      <geometry><box size="0.025 0.043 0.105"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.0525"/>
+      <mass value="0.126"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+
+
+  <!-- Left finger -->
+  <joint name="gripper_joint" type="prismatic">
+    <parent link="arm_pillar_link"/>
+    <child link="left_finger"/>
+    <origin xyz="0 -0.018 0.105"/>
+    <axis xyz="0 1 0"/>
+    <!-- these are from the working gripper -->
+    <limit lower="0" upper="0.00825" effort="5" velocity="0.5"/>
+  </joint>
+
+  <link name="left_finger">
+    <visual>
+      <origin xyz="0 0 0.03"/>
+      <geometry><box size="0.012 0.008 0.06"/></geometry>
+      <material name="white"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0.004 0.06"/>
+      <geometry><box size="0.012 0.015 0.005"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.03"/>
+      <!-- narrow collision box from working setup -->
+      <geometry><box size="0.005 0.002 0.05"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.03"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0"
+               iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <!-- Right finger-->
+  <joint name="gripper_joint_mimic" type="prismatic">
+    <parent link="arm_pillar_link"/>
+    <child link="right_finger"/>
+    <origin xyz="0 0.018 0.105"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-0.00825" upper="0" effort="5" velocity="0.5"/>
+    <!-- URDF mimic tag (this was working) -->
+    <mimic joint="gripper_joint" multiplier="-1.0" offset="0"/>
+  </joint>
+
+  <link name="right_finger">
+    <visual>
+      <origin xyz="0 0 0.03"/>
+      <geometry><box size="0.012 0.008 0.06"/></geometry>
+      <material name="white"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.004 0.06"/>
+      <geometry><box size="0.012 0.015 0.005"/></geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.03"/>
+      <!-- match left finger collision -->
+      <geometry><box size="0.005 0.002 0.05"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.03"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0"
+               iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+
+
+
+  <transmission name="trans1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="trans2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="trans3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="gripper_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo>
+
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+    </plugin>
+
+    <!-- Gripper mimic joint plugin  -->
+    <plugin name="mimic_joint_plugin" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>gripper_joint</joint>
+      <mimicJoint>gripper_joint_mimic</mimicJoint>
+      <multiplier>-1.0</multiplier>
+    </plugin>
+
+    <!-- Skid-steer drive  -->
+    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+      <updateRate>50.0</updateRate>
+
+      <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+      <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+      <leftRearJoint>rear_left_wheel_joint</leftRearJoint>
+      <rightRearJoint>rear_right_wheel_joint</rightRearJoint>
+
+      <wheelSeparation>0.165</wheelSeparation>
+      <wheelDiameter>0.06</wheelDiameter>
+      <torque>200.0</torque>
+
+      <commandTopic>cmd_vel</commandTopic>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+</robot>
+

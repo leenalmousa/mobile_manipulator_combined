@@ -1,0 +1,34 @@
+<launch>
+  <arg name="x" default="0.0" />
+  <arg name="y" default="0.0" />
+  <arg name="z" default="0.0" />
+  <arg name="gui" default="true" />
+  <arg name="paused" default="false" />
+
+  <param name="use_sim_time" value="true" />
+
+  <param name="robot_description"
+         textfile="$(find mobile_manipulator_combined)/urdf/mobile_manipulator.urdf" />
+
+  <rosparam file="$(find mobile_manipulator_combined)/config/combined_control.yaml"
+            command="load" />
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="use_sim_time" value="true" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="headless" value="false" />
+    <arg name="debug" value="false" />
+  </include>
+
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_mobile_manipulator"
+        args="-urdf -param robot_description -model mobile_manipulator
+              -x $(arg x) -y $(arg y) -z $(arg z)"
+        output="screen" />
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        args="joint_state_controller arm_controller"
+        output="screen" />
+
+</launch>
+

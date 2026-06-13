@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>mobile_manipulator_combined</name>
+  <version>1.0.0</version>
+  <description>
+    Differential-drive mobile manipulator with a 2-DOF arm and parallel-jaw
+    gripper, simulated in Gazebo and controlled through ros_control.
+  </description>
+
+  <maintainer email="leenalmousa@users.noreply.github.com">Leen Almousa</maintainer>
+  <author>Leen Almousa</author>
+
+  <license>MIT</license>
+
+  <url type="repository">https://github.com/leenalmousa/mobile_manipulator_combined</url>
+  <url type="bugtracker">https://github.com/leenalmousa/mobile_manipulator_combined/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>controller_manager</depend>
+  <depend>gazebo_plugins</depend>
+  <depend>gazebo_ros</depend>
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+
+  <export>
+  </export>
+</package>

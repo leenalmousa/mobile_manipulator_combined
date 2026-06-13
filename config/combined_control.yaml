@@ -1,0 +1,28 @@
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - joint1
+    - joint2
+    - gripper_joint    
+  gains:
+    joint1: {p: 100.0, i: 0.1, d: 10.0}
+    joint2: {p: 100.0, i: 0.1, d: 10.0}
+    gripper_joint: {p: 50.0, i: 0.01, d: 1.0}
+
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    joint1: {trajectory: 0.1, goal: 0.02}
+    joint2: {trajectory: 0.1, goal: 0.02}
+    gripper_joint: {trajectory: 0.1, goal: 0.01}
+
+gazebo_ros_control:
+  pid_gains:
+    joint1:        {p: 40.0, i: 0.1, d: 2.0}
+    joint2:        {p: 40.0, i: 0.1, d: 2.0}
+    gripper_joint: {p: 20.0, i: 0.01, d: 0.5}
+
