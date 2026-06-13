@@ -6,9 +6,9 @@ The base uses a skid-steer drive (four continuous wheels), and the arm is mounte
 
 ## Demo
 
-https://github.com/leenalmousa/mobile_manipulator_combined/assets/demo.mp4
+<video src="https://github.com/leenalmousa/mobile_manipulator_combined/raw/main/media/demo.mp4" controls width="720"></video>
 
-> If the embed doesn't play, the video is also available at [`media/demo.mp4`](media/demo.mp4).
+> If the embedded player doesn't load, [click here to watch the demo](https://github.com/leenalmousa/mobile_manipulator_combined/raw/main/media/demo.mp4).
 
 ## Features
 
